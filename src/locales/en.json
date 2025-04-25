@@ -1,0 +1,8 @@
+{
+    "formTitle": "Form 8843 Assistant",
+    "name": "Name",
+    "sevis": "SEVIS Number",
+    "school": "School Name",
+    "entryDate": "Date of First Entry",
+    "submit": "Generate PDF"
+  }

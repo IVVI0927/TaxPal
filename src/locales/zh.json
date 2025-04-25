@@ -1,0 +1,8 @@
+{
+    "formTitle": "8843表格填写助手",
+    "name": "姓名",
+    "sevis": "SEVIS 编号",
+    "school": "学校名称",
+    "entryDate": "首次入境时间",
+    "submit": "生成 PDF"
+  }
