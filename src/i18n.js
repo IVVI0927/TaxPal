@@ -3,7 +3,8 @@ import en from './locales/en.json'
 import zh from './locales/zh.json'
 
 const i18n = createI18n({
-  locale: 'zh', // 默认语言
+  legacy: false,   // ✅ 重点！关闭 legacy 模式
+  locale: 'zh',    // 默认语言
   fallbackLocale: 'en',
   messages: {
     en,

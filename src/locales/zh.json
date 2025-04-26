@@ -1,8 +1,13 @@
 {
-    "formTitle": "8843表格填写助手",
-    "name": "姓名",
-    "sevis": "SEVIS 编号",
-    "school": "学校名称",
-    "entryDate": "首次入境时间",
-    "submit": "生成 PDF"
-  }
+  "formTitle": "8843表格填写助手",
+  "name": "姓名",
+  "passport": "护照号码",
+  "citizenship": "国籍",
+  "usAddress": "美国地址",
+  "entryDate": "首次抵美日期",
+  "visaType": "签证类型",
+  "sevis": "SEVIS编号",
+  "school": "学校名称",
+  "schoolAddress": "学校地址",
+  "submit": "生成 PDF"
+}

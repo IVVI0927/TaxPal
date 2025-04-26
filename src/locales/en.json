@@ -1,8 +1,13 @@
 {
-    "formTitle": "Form 8843 Assistant",
-    "name": "Name",
-    "sevis": "SEVIS Number",
-    "school": "School Name",
-    "entryDate": "Date of First Entry",
-    "submit": "Generate PDF"
-  }
+  "formTitle": "Form 8843 Assistant",
+  "name": "Full Name",
+  "passport": "Passport Number",
+  "citizenship": "Country of Citizenship",
+  "usAddress": "U.S. Address",
+  "entryDate": "Date of First Entry",
+  "visaType": "Visa Type",
+  "sevis": "SEVIS Number",
+  "school": "School Name",
+  "schoolAddress": "School Address",
+  "submit": "Generate PDF"
+}
