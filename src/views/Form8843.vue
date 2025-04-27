@@ -1,55 +1,79 @@
 <template>
-  <div class="max-w-2xl mx-auto mt-10 space-y-6">
-    <h1 class="text-2xl font-bold text-center text-blue-700">{{ $t('formTitle') }}</h1>
+  <div class="max-w-2xl mx-auto mt-12 p-8 bg-white shadow-md rounded-lg space-y-6">
+    <h1 class="text-3xl font-extrabold text-center text-blue-700 mb-8">{{ $t('formTitle') }}</h1>
 
     <form @submit.prevent="handleSubmit" class="space-y-4">
 
       <div>
-        <label class="block font-semibold">{{ $t('name') }}</label>
-        <input v-model="form.name" type="text" class="w-full border p-2 rounded" />
+        <div class="space-y-1">
+          <label class="block font-semibold">{{ $t('name') }}</label>
+          <input v-model="form.name" type="text" class="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-400 transition" />
+          <p v-if="errors.name" class="text-red-500 text-xs mt-1">{{ errors.name }}</p>
+        </div>
       </div>
 
       <div>
-        <label class="block font-semibold">{{ $t('passport') }}</label>
-        <input v-model="form.passport" type="text" class="w-full border p-2 rounded" />
+        <div class="space-y-1">
+          <label class="block font-semibold">{{ $t('passport') }}</label>
+          <input v-model="form.passport" type="text" class="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-400 transition" />
+          <p v-if="errors.passport" class="text-red-500 text-xs mt-1">{{ errors.passport }}</p>
+        </div>
       </div>
 
       <div>
-        <label class="block font-semibold">{{ $t('citizenship') }}</label>
-        <input v-model="form.citizenship" type="text" class="w-full border p-2 rounded" />
+        <div class="space-y-1">
+          <label class="block font-semibold">{{ $t('citizenship') }}</label>
+          <input v-model="form.citizenship" type="text" class="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-400 transition" />
+          <p v-if="errors.citizenship" class="text-red-500 text-xs mt-1">{{ errors.citizenship }}</p>
+        </div>
       </div>
 
       <div>
-        <label class="block font-semibold">{{ $t('usAddress') }}</label>
-        <input v-model="form.usAddress" type="text" class="w-full border p-2 rounded" />
+        <div class="space-y-1">
+          <label class="block font-semibold">{{ $t('usAddress') }}</label>
+          <input v-model="form.usAddress" type="text" class="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-400 transition" />
+          <p v-if="errors.usAddress" class="text-red-500 text-xs mt-1">{{ errors.usAddress }}</p>
+        </div>
       </div>
 
       <div>
-        <label class="block font-semibold">{{ $t('entryDate') }}</label>
-        <input v-model="form.entryDate" type="date" class="w-full border p-2 rounded" />
+        <div class="space-y-1">
+          <label class="block font-semibold">{{ $t('entryDate') }}</label>
+          <input v-model="form.entryDate" type="date" class="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-400 transition" />
+        </div>
       </div>
 
       <div>
-        <label class="block font-semibold">{{ $t('visaType') }}</label>
-        <input v-model="form.visaType" type="text" disabled class="w-full border p-2 rounded bg-gray-100" />
+        <div class="space-y-1">
+          <label class="block font-semibold">{{ $t('visaType') }}</label>
+          <input v-model="form.visaType" type="text" disabled class="w-full border border-gray-300 p-2 rounded bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-400 transition" />
+        </div>
       </div>
 
       <div>
-        <label class="block font-semibold">{{ $t('sevis') }}</label>
-        <input v-model="form.sevis" type="text" class="w-full border p-2 rounded" />
+        <div class="space-y-1">
+          <label class="block font-semibold">{{ $t('sevis') }}</label>
+          <input v-model="form.sevis" type="text" class="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-400 transition" />
+          <p v-if="errors.sevis" class="text-red-500 text-xs mt-1">{{ errors.sevis }}</p>
+        </div>
       </div>
 
       <div>
-        <label class="block font-semibold">{{ $t('school') }}</label>
-        <input v-model="form.school" type="text" class="w-full border p-2 rounded" />
+        <div class="space-y-1">
+          <label class="block font-semibold">{{ $t('school') }}</label>
+          <input v-model="form.school" type="text" class="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-400 transition" />
+          <p v-if="errors.school" class="text-red-500 text-xs mt-1">{{ errors.school }}</p>
+        </div>
       </div>
 
       <div>
-        <label class="block font-semibold">{{ $t('schoolAddress') }}</label>
-        <input v-model="form.schoolAddress" type="text" class="w-full border p-2 rounded" />
+        <div class="space-y-1">
+          <label class="block font-semibold">{{ $t('schoolAddress') }}</label>
+          <input v-model="form.schoolAddress" type="text" class="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-400 transition" />
+        </div>
       </div>
 
-      <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+      <button type="submit" class="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded transition">
         {{ $t('submit') }}
       </button>
 
@@ -58,53 +82,79 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { PDFDocument, StandardFonts, rgb } from 'pdf-lib'
 
 const { t } = useI18n()
 
+// 表单数据
 const form = ref({
   name: '',
   passport: '',
   citizenship: '',
   usAddress: '',
   entryDate: '',
-  visaType: 'F-1',   // 固定是F-1
+  visaType: 'F-1',
   sevis: '',
   school: '',
   schoolAddress: ''
 })
 
-import { PDFDocument, StandardFonts, rgb } from 'pdf-lib'
+// 表单错误对象
+const errors = ref({
+  name: '',
+  passport: '',
+  citizenship: '',
+  usAddress: '',
+  sevis: '',
+  school: ''
+})
 
-const handleSubmit = async () => {
-  // 表单校验
+// 校验函数
+const validateForm = () => {
+  let valid = true
+  errors.value = {
+    name: '',
+    passport: '',
+    citizenship: '',
+    usAddress: '',
+    sevis: '',
+    school: ''
+  }
   if (!form.value.name) {
-    alert('请填写姓名！')
-    return
+    errors.value.name = t('errorName')
+    valid = false
   }
   if (!form.value.passport) {
-    alert('请填写护照号码！')
-    return
+    errors.value.passport = t('errorPassport')
+    valid = false
   }
   if (!form.value.citizenship) {
-    alert('请填写国籍！')
-    return
+    errors.value.citizenship = t('errorCitizenship')
+    valid = false
   }
   if (!form.value.usAddress) {
-    alert('请填写美国地址！')
-    return
+    errors.value.usAddress = t('errorUSAddress')
+    valid = false
   }
   if (!form.value.sevis) {
-    alert('请填写SEVIS编号！')
-    return
+    errors.value.sevis = t('errorSEVIS')
+    valid = false
   }
   if (!form.value.school) {
-    alert('请填写学校名称！')
+    errors.value.school = t('errorSchool')
+    valid = false
+  }
+  return valid
+}
+
+const handleSubmit = async () => {
+  if (!validateForm()) {
     return
   }
 
-  // 如果校验通过，生成 PDF！
+  // 校验通过，生成 PDF！
   const pdfDoc = await PDFDocument.create()
   const page = pdfDoc.addPage([612, 792])
   const font = await pdfDoc.embedFont(StandardFonts.Helvetica)
@@ -141,18 +191,40 @@ const handleSubmit = async () => {
     startY -= 30
   })
 
+  // 写入生成日期
   const today = new Date();
-  const formattedDate = `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`;
+  const formattedDate = `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`
   page.drawText(`Date of PDF generation: ${formattedDate}`, {
     x: 50,
     y: startY - 20,
     size: 12,
     font
-  });
+  })
 
   const pdfBytes = await pdfDoc.save()
   const blob = new Blob([pdfBytes], { type: 'application/pdf' })
   const url = URL.createObjectURL(blob)
-  window.open(url)
+
+  const link = document.createElement('a')
+  link.href = url
+  link.download = 'form8843.pdf'
+  link.click()
+  URL.revokeObjectURL(url)
+
+  // 清空表单
+  form.value = {
+    name: '',
+    passport: '',
+    citizenship: '',
+    usAddress: '',
+    entryDate: '',
+    visaType: 'F-1',
+    sevis: '',
+    school: '',
+    schoolAddress: ''
+  }
+
+  // 成功提示
+  alert('✅ PDF生成成功！表单已重置。')
 }
 </script>
