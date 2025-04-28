@@ -1,83 +1,117 @@
 <template>
-  <div class="max-w-2xl mx-auto mt-12 p-8 bg-white shadow-md rounded-lg space-y-6">
-    <h1 class="text-3xl font-extrabold text-center text-blue-700 mb-8">{{ $t('formTitle') }}</h1>
+  <div class="min-h-screen bg-gradient-to-b from-blue-100 via-white to-blue-50 py-12 px-4">
+    <div v-if="showSuccess" class="fixed top-5 left-1/2 transform -translate-x-1/2 bg-green-500 text-white px-6 py-3 rounded-full shadow-lg text-center transition">
+      ✅ PDF生成成功！表单已重置。
+    </div>
+    <div class="max-w-2xl mx-auto mt-12 p-8 bg-white shadow-md rounded-lg space-y-6">
+      <h1 class="text-3xl font-extrabold text-center text-blue-700 mb-8">{{ $t('formTitle') }}</h1>
 
-    <form @submit.prevent="handleSubmit" class="space-y-4">
+      <form @submit.prevent="handleSubmit" class="space-y-4">
 
-      <div>
-        <div class="space-y-1">
-          <label class="block font-semibold">{{ $t('name') }}</label>
-          <input v-model="form.name" type="text" class="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-400 transition" />
-          <p v-if="errors.name" class="text-red-500 text-xs mt-1">{{ errors.name }}</p>
+        <div>
+          <div class="space-y-1">
+            <label class="block font-semibold">{{ $t('name') }}</label>
+            <input v-model="form.name" type="text" class="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-400 transition" />
+            <p v-if="errors.name" class="text-red-500 text-xs mt-1">{{ errors.name }}</p>
+          </div>
         </div>
-      </div>
 
-      <div>
-        <div class="space-y-1">
-          <label class="block font-semibold">{{ $t('passport') }}</label>
-          <input v-model="form.passport" type="text" class="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-400 transition" />
-          <p v-if="errors.passport" class="text-red-500 text-xs mt-1">{{ errors.passport }}</p>
+        <div>
+          <div class="space-y-1">
+            <label class="block font-semibold">{{ $t('passport') }}</label>
+            <input v-model="form.passport" type="text" class="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-400 transition" />
+            <p v-if="errors.passport" class="text-red-500 text-xs mt-1">{{ errors.passport }}</p>
+          </div>
         </div>
-      </div>
 
-      <div>
-        <div class="space-y-1">
-          <label class="block font-semibold">{{ $t('citizenship') }}</label>
-          <input v-model="form.citizenship" type="text" class="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-400 transition" />
-          <p v-if="errors.citizenship" class="text-red-500 text-xs mt-1">{{ errors.citizenship }}</p>
+        <div>
+          <div class="relative space-y-1">
+            <label class="block font-semibold">{{ $t('citizenship') }}</label>
+            <input
+              v-model="form.citizenship"
+              @input="searchQuery = form.citizenship"
+              type="text"
+              class="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
+              autocomplete="off"
+              placeholder="Type to search country"
+            />
+            <p v-if="errors.citizenship" class="text-red-500 text-xs mt-1">{{ errors.citizenship }}</p>
+            <ul v-if="filteredCountries.length" class="absolute z-10 bg-white border border-gray-300 rounded w-full mt-1 max-h-48 overflow-auto shadow-md list-none p-2 space-y-2">
+              <li
+                v-for="country in filteredCountries"
+                :key="country"
+                @click="selectCountry(country)"
+                class="flex items-center gap-2 bg-blue-50 hover:bg-blue-100 text-blue-700 font-medium px-4 py-2 rounded cursor-pointer transition"
+              >
+                <span v-if="country === 'China'">🇨🇳</span>
+                <span v-else-if="country === 'United States'">🇺🇸</span>
+                <span v-else-if="country === 'Canada'">🇨🇦</span>
+                <span v-else-if="country === 'United Kingdom'">🇬🇧</span>
+                <span v-else-if="country === 'Australia'">🇦🇺</span>
+                <span v-else-if="country === 'Germany'">🇩🇪</span>
+                <span v-else-if="country === 'France'">🇫🇷</span>
+                <span v-else-if="country === 'Japan'">🇯🇵</span>
+                <span v-else-if="country === 'South Korea'">🇰🇷</span>
+                <span v-else-if="country === 'Singapore'">🇸🇬</span>
+                <span v-else-if="country === 'India'">🇮🇳</span>
+                <span v-else-if="country === 'Mexico'">🇲🇽</span>
+                {{ country }}
+              </li>
+            </ul>
+          </div>
         </div>
-      </div>
 
-      <div>
-        <div class="space-y-1">
-          <label class="block font-semibold">{{ $t('usAddress') }}</label>
-          <input v-model="form.usAddress" type="text" class="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-400 transition" />
-          <p v-if="errors.usAddress" class="text-red-500 text-xs mt-1">{{ errors.usAddress }}</p>
+        <div>
+          <div class="space-y-1">
+            <label class="block font-semibold">{{ $t('usAddress') }}</label>
+            <input v-model="form.usAddress" type="text" class="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-400 transition" />
+            <p v-if="errors.usAddress" class="text-red-500 text-xs mt-1">{{ errors.usAddress }}</p>
+          </div>
         </div>
-      </div>
 
-      <div>
-        <div class="space-y-1">
-          <label class="block font-semibold">{{ $t('entryDate') }}</label>
-          <input v-model="form.entryDate" type="date" class="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-400 transition" />
+        <div>
+          <div class="space-y-1">
+            <label class="block font-semibold">{{ $t('entryDate') }}</label>
+            <input v-model="form.entryDate" type="date" class="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-400 transition" />
+          </div>
         </div>
-      </div>
 
-      <div>
-        <div class="space-y-1">
-          <label class="block font-semibold">{{ $t('visaType') }}</label>
-          <input v-model="form.visaType" type="text" disabled class="w-full border border-gray-300 p-2 rounded bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-400 transition" />
+        <div>
+          <div class="space-y-1">
+            <label class="block font-semibold">{{ $t('visaType') }}</label>
+            <input v-model="form.visaType" type="text" disabled class="w-full border border-gray-300 p-2 rounded bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-400 transition" />
+          </div>
         </div>
-      </div>
 
-      <div>
-        <div class="space-y-1">
-          <label class="block font-semibold">{{ $t('sevis') }}</label>
-          <input v-model="form.sevis" type="text" class="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-400 transition" />
-          <p v-if="errors.sevis" class="text-red-500 text-xs mt-1">{{ errors.sevis }}</p>
+        <div>
+          <div class="space-y-1">
+            <label class="block font-semibold">{{ $t('sevis') }}</label>
+            <input v-model="form.sevis" type="text" class="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-400 transition" />
+            <p v-if="errors.sevis" class="text-red-500 text-xs mt-1">{{ errors.sevis }}</p>
+          </div>
         </div>
-      </div>
 
-      <div>
-        <div class="space-y-1">
-          <label class="block font-semibold">{{ $t('school') }}</label>
-          <input v-model="form.school" type="text" class="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-400 transition" />
-          <p v-if="errors.school" class="text-red-500 text-xs mt-1">{{ errors.school }}</p>
+        <div>
+          <div class="space-y-1">
+            <label class="block font-semibold">{{ $t('school') }}</label>
+            <input v-model="form.school" type="text" class="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-400 transition" />
+            <p v-if="errors.school" class="text-red-500 text-xs mt-1">{{ errors.school }}</p>
+          </div>
         </div>
-      </div>
 
-      <div>
-        <div class="space-y-1">
-          <label class="block font-semibold">{{ $t('schoolAddress') }}</label>
-          <input v-model="form.schoolAddress" type="text" class="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-400 transition" />
+        <div>
+          <div class="space-y-1">
+            <label class="block font-semibold">{{ $t('schoolAddress') }}</label>
+            <input v-model="form.schoolAddress" type="text" class="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-400 transition" />
+          </div>
         </div>
-      </div>
 
-      <button type="submit" class="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded transition">
-        {{ $t('submit') }}
-      </button>
+        <button type="submit" class="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded transition">
+          {{ $t('submit') }}
+        </button>
 
-    </form>
+      </form>
+    </div>
   </div>
 </template>
 
@@ -97,9 +131,26 @@ const form = ref({
   entryDate: '',
   visaType: 'F-1',
   sevis: '',
-  school: '',
-  schoolAddress: ''
+  school: 'University of California, Irvine',
+  schoolAddress: '501 Aldrich Hall, Irvine, CA 92697-4975'
 })
+// --- Country search logic ---
+const countryOptions = [
+  'China', 'United States', 'Canada', 'United Kingdom', 'Australia', 'Germany', 'France', 'Japan', 'South Korea', 'Singapore', 'India', 'Mexico'
+]
+
+const searchQuery = ref('')
+const filteredCountries = computed(() => {
+  if (!searchQuery.value) return []
+  return countryOptions.filter(c =>
+    c.toLowerCase().includes(searchQuery.value.toLowerCase())
+  )
+})
+
+const selectCountry = (country) => {
+  form.value.citizenship = country
+  searchQuery.value = ''
+}
 
 // 表单错误对象
 const errors = ref({
@@ -149,6 +200,15 @@ const validateForm = () => {
   return valid
 }
 
+const showSuccess = ref(false)
+
+const triggerSuccessToast = () => {
+  showSuccess.value = true
+  setTimeout(() => {
+    showSuccess.value = false
+  }, 3000)
+}
+
 const handleSubmit = async () => {
   if (!validateForm()) {
     return
@@ -157,13 +217,15 @@ const handleSubmit = async () => {
   // 校验通过，生成 PDF！
   const pdfDoc = await PDFDocument.create()
   const page = pdfDoc.addPage([612, 792])
-  const font = await pdfDoc.embedFont(StandardFonts.Helvetica)
+  const fontUrl = '/fonts/NotoSansSC-Regular.otf'
+  const fontBytes = await fetch(fontUrl).then(res => res.arrayBuffer())
+  const font = await pdfDoc.embedFont(fontBytes)
 
   page.drawText('Form 8843 - Statement for Exempt Individuals', {
     x: 50,
     y: 750,
     size: 18,
-    font,
+    font: font,
     color: rgb(0, 0, 0.7)
   })
 
@@ -220,11 +282,11 @@ const handleSubmit = async () => {
     entryDate: '',
     visaType: 'F-1',
     sevis: '',
-    school: '',
-    schoolAddress: ''
+    school: 'University of California, Irvine',
+    schoolAddress: '501 Aldrich Hall, Irvine, CA 92697-4975'
   }
 
   // 成功提示
-  alert('✅ PDF生成成功！表单已重置。')
+  triggerSuccessToast()
 }
 </script>
