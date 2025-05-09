@@ -1,13 +1,23 @@
 {
-  "formTitle": "8843表格填写助手",
+  "formTitle": "Form 8843 助手",
+  "personalInfo": "个人信息",
   "name": "姓名",
   "passport": "护照号码",
   "citizenship": "国籍",
   "usAddress": "美国地址",
-  "entryDate": "首次抵美日期",
+  "entryDate": "入境日期",
   "visaType": "签证类型",
-  "sevis": "SEVIS编号",
+  "schoolInfo": "学校信息",
+  "sevis": "SEVIS 号码",
   "school": "学校名称",
   "schoolAddress": "学校地址",
-  "submit": "生成 PDF"
+  "submit": "生成 PDF",
+  "generating": "正在生成 PDF...",
+  "errorName": "请输入姓名",
+  "errorPassport": "请输入护照号码",
+  "errorCitizenship": "请选择国籍",
+  "errorUsAddress": "请输入美国地址",
+  "errorSevis": "请输入 SEVIS 号码",
+  "errorSchool": "请输入学校名称",
+  "success": "PDF 生成成功！表单已重置。"
 }

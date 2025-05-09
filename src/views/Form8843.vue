@@ -11,130 +11,33 @@
       </div>
 
       <form @submit.prevent="handleSubmit" class="space-y-4">
-
-        <!-- Personal Info -->
-        <div class="space-y-4">
-          <h3 class="text-xl font-semibold text-gray-700 border-b pb-1">{{ $t('personalInfo') }}</h3>
-
-          <div>
-            <div class="space-y-1">
-              <label class="block font-semibold">{{ $t('name') }}</label>
-              <input v-model="form.name" type="text" class="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-400 transition" />
-              <p v-if="errors.name" class="text-red-500 text-xs mt-1">{{ errors.name }}</p>
-            </div>
-          </div>
-
-          <div>
-            <div class="space-y-1">
-              <label class="block font-semibold">{{ $t('passport') }}</label>
-              <input v-model="form.passport" type="text" class="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-400 transition" />
-              <p v-if="errors.passport" class="text-red-500 text-xs mt-1">{{ errors.passport }}</p>
-            </div>
-          </div>
-
-          <div>
-            <div class="relative space-y-1">
-              <label class="block font-semibold">{{ $t('citizenship') }}</label>
-              <input
-                v-model="form.citizenship"
-                @input="searchQuery = form.citizenship"
-                type="text"
-                class="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
-                autocomplete="off"
-                placeholder="Type to search country"
-              />
-              <p v-if="errors.citizenship" class="text-red-500 text-xs mt-1">{{ errors.citizenship }}</p>
-              <ul v-if="filteredCountries.length" class="absolute z-10 bg-white border border-gray-300 rounded w-full mt-1 max-h-48 overflow-auto shadow-md list-none p-2 space-y-2">
-                <li
-                  v-for="country in filteredCountries"
-                  :key="country"
-                  @click="selectCountry(country)"
-                  class="flex items-center gap-2 bg-blue-50 hover:bg-blue-100 text-blue-700 font-medium px-4 py-2 rounded cursor-pointer transition"
-                >
-                  <span v-if="country === 'China'">🇨🇳</span>
-                  <span v-else-if="country === 'United States'">🇺🇸</span>
-                  <span v-else-if="country === 'Canada'">🇨🇦</span>
-                  <span v-else-if="country === 'United Kingdom'">🇬🇧</span>
-                  <span v-else-if="country === 'Australia'">🇦🇺</span>
-                  <span v-else-if="country === 'Germany'">🇩🇪</span>
-                  <span v-else-if="country === 'France'">🇫🇷</span>
-                  <span v-else-if="country === 'Japan'">🇯🇵</span>
-                  <span v-else-if="country === 'South Korea'">🇰🇷</span>
-                  <span v-else-if="country === 'Singapore'">🇸🇬</span>
-                  <span v-else-if="country === 'India'">🇮🇳</span>
-                  <span v-else-if="country === 'Mexico'">🇲🇽</span>
-                  {{ country }}
-                </li>
-              </ul>
-            </div>
-          </div>
-
-          <div>
-            <div class="space-y-1">
-              <label class="block font-semibold">{{ $t('usAddress') }}</label>
-              <input v-model="form.usAddress" type="text" class="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-400 transition" />
-              <p v-if="errors.usAddress" class="text-red-500 text-xs mt-1">{{ errors.usAddress }}</p>
-            </div>
-          </div>
-
-          <div>
-            <div class="space-y-1">
-              <label class="block font-semibold">{{ $t('entryDate') }}</label>
-              <input v-model="form.entryDate" type="date" class="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-400 transition" />
-            </div>
-          </div>
-
-          <div>
-            <div class="space-y-1">
-              <label class="block font-semibold">{{ $t('visaType') }}</label>
-              <input v-model="form.visaType" type="text" disabled class="w-full border border-gray-300 p-2 rounded bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-400 transition" />
-            </div>
-          </div>
-        </div>
-
-        <!-- School Info -->
-        <div class="space-y-4">
-          <h3 class="text-xl font-semibold text-gray-700 border-b pb-1">{{ $t('schoolInfo') }}</h3>
-
-          <div>
-            <div class="space-y-1">
-              <label class="block font-semibold">{{ $t('sevis') }}</label>
-              <input v-model="form.sevis" type="text" class="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-400 transition" />
-              <p v-if="errors.sevis" class="text-red-500 text-xs mt-1">{{ errors.sevis }}</p>
-            </div>
-          </div>
-
-          <div>
-            <div class="space-y-1">
-              <label class="block font-semibold">{{ $t('school') }}</label>
-              <input v-model="form.school" type="text" class="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-400 transition" />
-              <p v-if="errors.school" class="text-red-500 text-xs mt-1">{{ errors.school }}</p>
-            </div>
-          </div>
-
-          <div>
-            <div class="space-y-1">
-              <label class="block font-semibold">{{ $t('schoolAddress') }}</label>
-              <input v-model="form.schoolAddress" type="text" class="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-400 transition" />
-            </div>
-          </div>
-        </div>
-
-        <button type="submit" class="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded transition">
-          {{ $t('submit') }}
+        <PersonalInfo :form="form" :errors="errors" :validateField="validateField" />
+        <SchoolInfo :form="form" :errors="errors" :validateField="validateField" />
+        <button type="submit" class="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded transition" :disabled="isLoading">
+          <span v-if="isLoading" class="flex items-center justify-center">
+            <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+            {{ $t('generating') }}
+          </span>
+          <span v-else>{{ $t('submit') }}</span>
         </button>
-
       </form>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { PDFDocument, StandardFonts, rgb } from 'pdf-lib'
+import PersonalInfo from '../components/PersonalInfo.vue'
+import SchoolInfo from '../components/SchoolInfo.vue'
+import { useFormValidation } from '../composables/useFormValidation'
 
 const { t } = useI18n()
+const { errors, validateForm, validateField, focusFirstError } = useFormValidation()
 
 // 表单数据
 const form = ref({
@@ -148,159 +51,69 @@ const form = ref({
   school: 'University of California, Irvine',
   schoolAddress: '501 Aldrich Hall, Irvine, CA 92697-4975'
 })
-// --- Country search logic ---
-const countryOptions = [
-  'China', 'United States', 'Canada', 'United Kingdom', 'Australia', 'Germany', 'France', 'Japan', 'South Korea', 'Singapore', 'India', 'Mexico'
-]
-
-const searchQuery = ref('')
-const filteredCountries = computed(() => {
-  if (!searchQuery.value) return []
-  return countryOptions.filter(c =>
-    c.toLowerCase().includes(searchQuery.value.toLowerCase())
-  )
-})
-
-const selectCountry = (country) => {
-  form.value.citizenship = country
-  searchQuery.value = ''
-}
-
-// 表单错误对象
-const errors = ref({
-  name: '',
-  passport: '',
-  citizenship: '',
-  usAddress: '',
-  sevis: '',
-  school: ''
-})
-
-// 校验函数
-const validateForm = () => {
-  let valid = true
-  errors.value = {
-    name: '',
-    passport: '',
-    citizenship: '',
-    usAddress: '',
-    sevis: '',
-    school: ''
-  }
-  if (!form.value.name) {
-    errors.value.name = t('errorName')
-    valid = false
-  }
-  if (!form.value.passport) {
-    errors.value.passport = t('errorPassport')
-    valid = false
-  }
-  if (!form.value.citizenship) {
-    errors.value.citizenship = t('errorCitizenship')
-    valid = false
-  }
-  if (!form.value.usAddress) {
-    errors.value.usAddress = t('errorUSAddress')
-    valid = false
-  }
-  if (!form.value.sevis) {
-    errors.value.sevis = t('errorSEVIS')
-    valid = false
-  }
-  if (!form.value.school) {
-    errors.value.school = t('errorSchool')
-    valid = false
-  }
-  return valid
-}
 
 const showSuccess = ref(false)
-
-const triggerSuccessToast = () => {
-  showSuccess.value = true
-  setTimeout(() => {
-    showSuccess.value = false
-  }, 3000)
-}
+const isLoading = ref(false)
 
 const handleSubmit = async () => {
-  if (!validateForm()) {
+  if (!validateForm(form.value)) {
+    focusFirstError()
     return
   }
-
-  // 校验通过，生成 PDF！
+  isLoading.value = true
+  // PDF 生成逻辑
   const pdfDoc = await PDFDocument.create()
-  const page = pdfDoc.addPage([612, 792])
-  const fontUrl = '/fonts/NotoSansSC-Regular.otf'
-  const fontBytes = await fetch(fontUrl).then(res => res.arrayBuffer())
-  const font = await pdfDoc.embedFont(fontBytes)
-
-  page.drawText('Form 8843 - Statement for Exempt Individuals', {
-    x: 50,
-    y: 750,
-    size: 18,
-    font: font,
-    color: rgb(0, 0, 0.7)
-  })
-
-  const fields = [
-    { label: t('name'), value: form.value.name },
-    { label: t('passport'), value: form.value.passport },
-    { label: t('citizenship'), value: form.value.citizenship },
-    { label: t('usAddress'), value: form.value.usAddress },
-    { label: t('entryDate'), value: form.value.entryDate },
-    { label: t('visaType'), value: form.value.visaType },
-    { label: t('sevis'), value: form.value.sevis },
-    { label: t('school'), value: form.value.school },
-    { label: t('schoolAddress'), value: form.value.schoolAddress }
-  ]
-
-  let startY = 700
-
-  fields.forEach(({ label, value }) => {
-    page.drawText(`${label}: ${value}`, {
-      x: 50,
-      y: startY,
-      size: 12,
-      font
-    })
-    startY -= 30
-  })
-
-  // 写入生成日期
-  const today = new Date();
-  const formattedDate = `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`
-  page.drawText(`Date of PDF generation: ${formattedDate}`, {
-    x: 50,
-    y: startY - 20,
-    size: 12,
-    font
-  })
-
+  const page = pdfDoc.addPage()
+  const { width, height } = page.getSize()
+  const font = await pdfDoc.embedFont(StandardFonts.Helvetica)
+  page.drawText('Form 8843', { x: 50, y: height - 50, size: 20, font, color: rgb(0, 0, 0) })
+  page.drawText(`Name: ${form.value.name}`, { x: 50, y: height - 100, size: 12, font, color: rgb(0, 0, 0) })
+  page.drawText(`Passport: ${form.value.passport}`, { x: 50, y: height - 120, size: 12, font, color: rgb(0, 0, 0) })
+  page.drawText(`Citizenship: ${form.value.citizenship}`, { x: 50, y: height - 140, size: 12, font, color: rgb(0, 0, 0) })
+  page.drawText(`US Address: ${form.value.usAddress}`, { x: 50, y: height - 160, size: 12, font, color: rgb(0, 0, 0) })
+  page.drawText(`Entry Date: ${form.value.entryDate}`, { x: 50, y: height - 180, size: 12, font, color: rgb(0, 0, 0) })
+  page.drawText(`Visa Type: ${form.value.visaType}`, { x: 50, y: height - 200, size: 12, font, color: rgb(0, 0, 0) })
+  page.drawText(`SEVIS: ${form.value.sevis}`, { x: 50, y: height - 220, size: 12, font, color: rgb(0, 0, 0) })
+  page.drawText(`School: ${form.value.school}`, { x: 50, y: height - 240, size: 12, font, color: rgb(0, 0, 0) })
+  page.drawText(`School Address: ${form.value.schoolAddress}`, { x: 50, y: height - 260, size: 12, font, color: rgb(0, 0, 0) })
   const pdfBytes = await pdfDoc.save()
   const blob = new Blob([pdfBytes], { type: 'application/pdf' })
   const url = URL.createObjectURL(blob)
-
-  const link = document.createElement('a')
-  link.href = url
-  link.download = 'form8843.pdf'
-  link.click()
+  const a = document.createElement('a')
+  a.href = url
+  a.download = 'form8843.pdf'
+  a.click()
   URL.revokeObjectURL(url)
-
-  // 清空表单
-  form.value = {
-    name: '',
-    passport: '',
-    citizenship: '',
-    usAddress: '',
-    entryDate: '',
-    visaType: 'F-1',
-    sevis: '',
-    school: 'University of California, Irvine',
-    schoolAddress: '501 Aldrich Hall, Irvine, CA 92697-4975'
-  }
-
-  // 成功提示
-  triggerSuccessToast()
+  showSuccess.value = true
+  isLoading.value = false
+  setTimeout(() => {
+    showSuccess.value = false
+    form.value = {
+      name: '',
+      passport: '',
+      citizenship: '',
+      usAddress: '',
+      entryDate: '',
+      visaType: 'F-1',
+      sevis: '',
+      school: 'University of California, Irvine',
+      schoolAddress: '501 Aldrich Hall, Irvine, CA 92697-4975'
+    }
+  }, 3000)
 }
 </script>
+
+<style scoped>
+@media (max-width: 640px) {
+  .max-w-2xl {
+    margin-top: 0;
+    padding: 1rem;
+  }
+  .text-4xl {
+    font-size: 1.5rem;
+  }
+  .text-lg {
+    font-size: 1rem;
+  }
+}
+</style>
